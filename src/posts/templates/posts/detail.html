@@ -1,0 +1,13 @@
+{% extends 'posts/base.html'%}
+{%block content%} 
+<div class="container">
+        <h1 class="d-3">{{obj.title}}</h1>
+        <div style="text-align: center;">{{obj.content}}</div>
+        <img src="{%if obj.image%}{{obj.image.url}}{%endif%}" alt="" class="img-fluid">
+    </div>
+    <div class="jumbotron">
+        <a href="{% url 'posts:posts_update' post_id=obj.id%}" class="btn btn-secondary">update</a>
+        <a href="{% url 'posts:posts_delete' post_id=obj.id%}" class="btn btn-danger">delete</a>
+ </div>
+
+{%endblock%}
