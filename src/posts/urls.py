@@ -14,7 +14,7 @@ app_name='posts'
 urlpatterns=[
     path('',posts_home,name='posts_home'),
     path('create/',posts_create,name='posts_create'),
-    path('delete/<int:post_id>/',posts_delete,name='posts_delete'),
-    path('update/<int:post_id>/',posts_update,name='posts_update'),
-    path('detail/<int:post_id>/',posts_detail,name='posts_detail'),
+    path('delete/<slug:slug>/',posts_delete,name='posts_delete'),
+    path('update/<slug:slug>/',posts_update,name='posts_update'),
+    path('detail/<slug:slug>/',posts_detail,name='posts_detail'),
 ]

@@ -8,10 +8,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'posts/css/style.css'%}">
     <title>Document</title>
+    <style>
+    </style>
 </head>
 <body>
     <h1>All The Index Is Listed Here</h1>
     <a href="{% url 'posts:posts_create' %}" style="display:block">Create New</a>
+    <form action="." method="POST">
+        {% csrf_token %}
+        <input type="text" name='query' value={{search_value}}>
+        <input type="submit" value="search">
+    </form>
     {% if messages %}
     <ul class="messages">
        {% for message in messages%}
@@ -21,15 +28,15 @@
     {% endif%}
     {% for obj in obj_list%}
     <div class="col-md-6 mx-auto border border-success brder-2 m-2">
-       <a href="{% url 'posts:posts_detail' post_id=obj.id%}" class="h1">{{obj.title}}</a>
+       <a href="{% url 'posts:posts_detail' slug=obj.slug%}" class="h1">{{obj.title}}</a>
        <p>{{obj.content|linebreaks|truncatewords:30}}</p>
        <img src="{% if obj.image %}{{obj.image.url}}{%endif%}" alt="" class="img-fluid">
        <div>
        <small>created:{{obj.timestamp}}</small>
        <small>last updated:{{obj.updated|timesince}}</small>
        <div class="p-2">
-            <a href="{% url 'posts:posts_delete' post_id=obj.id%}" class="btn btn-danger">delete</a>
-            <a href="{% url 'posts:posts_update' post_id=obj.id%}" class="btn btn-secondary">update</a>
+            <a href="{% url 'posts:posts_delete' slug=obj.slug%}" class="btn btn-danger">delete</a>
+            <a href="{% url 'posts:posts_update' slug=obj.slug%}" class="btn btn-secondary">update</a>
        </div>
        </div>
     </div>
@@ -57,18 +64,18 @@
                 </li>
                 {%else%}
                 <li class="page-item">
-                        <a class="page-link" href="?page={{obj_list.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
+                        <a class="page-link" href="?page={{obj_list.previous_page_number}}&q={{searched_value}}" tabindex="-1" aria-disabled="true">Previous</a>
                 </li>
                 {% endif %}
               
-              <li class="page-item"><a class="page-link" href="?page={{obj_list.number}}">{{obj_list.number}} of {{obj_list.paginator.num_pages}}</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{obj_list.number}}&q={{searched_value}}">{{obj_list.number}} of {{obj_list.paginator.num_pages}}</a></li>
               {% if obj_list.has_next%}
               <li class="page-item">
-                    <a class="page-link" href="?page={{obj_list.next_page_number}}">Next</a>
+                    <a class="page-link" href="?page={{obj_list.next_page_number}}&q={{searched_value}}">Next</a>
               </li>
             {% else %}
               <li class="page-item">
-                <a class="page-link" href="?page={{obj_list.paginator.num_pages}}">Next</a>
+                <a class="page-link" href="?page={{obj_list.paginator.num_pages}}&q={{searched_value}}">Next</a>
               </li>
             {%endif%}
             </ul>

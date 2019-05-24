@@ -6,8 +6,24 @@
         <img src="{%if obj.image%}{{obj.image.url}}{%endif%}" alt="" class="img-fluid">
     </div>
     <div class="jumbotron">
-        <a href="{% url 'posts:posts_update' post_id=obj.id%}" class="btn btn-secondary">update</a>
-        <a href="{% url 'posts:posts_delete' post_id=obj.id%}" class="btn btn-danger">delete</a>
+        <a href="{% url 'posts:posts_update' slug=obj.slug%}" class="btn btn-secondary">update</a>
+        <a href="{% url 'posts:posts_delete' slug=obj.slug%}" class="btn btn-danger">delete</a>
+    </div>
+    <div class="p-3">
+            <div class="fb-like" data-href="{{request.build_absolute_uri}}" data-width="" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+    </div>
+    <div class="p-2">
+            <p>Share:</p>
+            <div>
+                 <a href="https://www.facebook.com/sharer/sharer.php?u={{request.get_absolute_uri}}" class="btn btn-outline-success">
+                     Facebook
+                 </a>
+                 <a href="https://www.twitter.com/home?status={{share_string}}%20{{request.build_absolute_url}}" class="btn btn-outline-primary">Twitter</a>
+            </div>
+        </div>  
+    <div class="p-2">
+            <div class="fb-comments" data-href="{{request.build_absolute_uri}}" data-width="" data-numposts="5"></div>
+    </div>  
  </div>
 
 {%endblock%}
